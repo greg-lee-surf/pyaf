@@ -119,6 +119,10 @@ PYBIND11_MODULE(pyaf, m){
 		.def(py::init<const int&, const int&, const tools::BCH_polynomial_generator<int>&>(), "K"_a, "N"_a, "GF"_a);
 
 
+	py::module_ m_conductor      = m.def_submodule("conductor");
+	py::class_<aff3ct::module::Conductor>(m_conductor, "Conductor", py_aff3ct_module)
+		.def(py::init<std::vector<float>, int, int, int>(), "noisy_vec"_a, "N"_a, "ix_x"_a, "ix_y"_a);
+
 
 	py::module_ m_radio        = m.def_submodule("radio"       );
 	#ifdef LINK_UHD

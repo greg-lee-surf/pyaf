@@ -50,6 +50,8 @@
 
 #include "Module/Radio/Radio.hpp"
 
+#include "Module/Conductor/Conductor.hpp"
+
 #ifdef LINK_UHD
 #include "Module/Radio/Radio_USRP/Radio_USRP.hpp"
 #endif //LINK_UHD
