@@ -34,8 +34,7 @@ Conductor::Conductor(std::vector<float> _noisy_vec, int _N, int _ix_x, int _ix_y
 
     auto &p1 = this->create_task("generate");
 
-	auto p1s_noisy_vec = this->template create_socket_out<float>(p1,  "noisy_vec", this->N  );
-	auto p1s_enable    = this->template create_socket_out<int>   (p1, "enable"   , 1        );
+	auto p1s_noisy_vec = this->template create_socket_out<float> (p1, "noisy_vec", this->N  );
 	auto p1s_delta_x   = this->template create_socket_out<float> (p1, "delta_x"  , 1        );
 	auto p1s_delta_y   = this->template create_socket_out<float> (p1, "delta_y"  , 1        );
 	auto p1s_ix_x      = this->template create_socket_out<int>   (p1, "ix_x"     , 1        );
@@ -45,14 +44,13 @@ Conductor::Conductor(std::vector<float> _noisy_vec, int _N, int _ix_x, int _ix_y
 
 
 	this->create_codelet(p1, 
-                         [p1s_noisy_vec, p1s_enable ,
+                         [p1s_noisy_vec,
                           p1s_delta_x  , p1s_delta_y,
                           p1s_ix_x     , p1s_ix_y   ,
                           p1s_x        , p1s_y       ]
                          (Module &m, Task &t, const size_t frame_id) -> int
 	{
 		static_cast<Conductor&>(m)._generate(static_cast<float*>(t[p1s_noisy_vec].get_dataptr()),
-		                                     static_cast<int*>  (t[p1s_enable].get_dataptr()),
                                              static_cast<float*>(t[p1s_delta_x].get_dataptr()),
                                         	 static_cast<float*>(t[p1s_delta_y].get_dataptr()),
                                        	     static_cast<int*>  (t[p1s_ix_x].get_dataptr()),
@@ -65,14 +63,15 @@ Conductor::Conductor(std::vector<float> _noisy_vec, int _N, int _ix_x, int _ix_y
 }
 
 void Conductor::_generate(float *_noisy_vec, 
-               	int *_enable, float *_delta_x, 
-              	float *_delta_y, int *_ix_x,
-               	int *_ix_y, int *_x, int *_y)
+                          float *_delta_x  , float *_delta_y, 
+                          int *_ix_x       , int *_ix_y, 
+                          int *_x          , int *_y)
 {
-    for (int i = 0 ; i < (int)this->noisy_vec.size() ; i++) {
-        _noisy_vec[i] = this->noisy_vec[i];
+    if (vec_cnt == 0) { // On initialise le noisy_vec puis on y touche plus
+        for (int i = 0 ; i < (int)this->noisy_vec.size() ; i++) {
+            _noisy_vec[i] = this->noisy_vec[i];
+        }
     }
-    *_enable    = this->enable;
     *_ix_x      = this->ix_x;
     *_ix_y      = this->ix_y;
     *_x         = (int)floor(this->vec_cnt / this->delta_y_range.size());
