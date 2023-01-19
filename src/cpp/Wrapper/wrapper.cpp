@@ -123,6 +123,14 @@ PYBIND11_MODULE(pyaf, m){
 	py::class_<aff3ct::module::Conductor>(m_conductor, "Conductor", py_aff3ct_module)
 		.def(py::init<std::vector<float>, int, int, int>(), "noisy_vec"_a, "N"_a, "ix_x"_a, "ix_y"_a);
 
+	// py::module_ m_display 		 = m.def_submodule("display");
+	// py::class_<aff3ct::module::Display_impulses>(m_display, "Display_impulses", py_aff3ct_module)
+	// 	.def(py::init<>());
+
+	py::module_ m_add_impulses   = m.def_submodule("add");
+	py::class_<aff3ct::module::Add_impulses>(m_add_impulses, "Add_impulses", py_aff3ct_module)
+		.def(py::init<int>(),"N"_a);
+
 
 	py::module_ m_radio        = m.def_submodule("radio"       );
 	#ifdef LINK_UHD

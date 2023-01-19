@@ -51,6 +51,8 @@
 #include "Module/Radio/Radio.hpp"
 
 #include "Module/Conductor/Conductor.hpp"
+#include "Module/Add/Add_impulses.hpp"
+// #include "Module/Display/Display.hpp"
 
 #ifdef LINK_UHD
 #include "Module/Radio/Radio_USRP/Radio_USRP.hpp"
