@@ -86,11 +86,8 @@ arange(float start, float stop, double step)
 {
     int n = (stop - start) / step;
     std::vector<float> fill;
-    // float result;
     for (int i = 0 ; i < n ; i++)
     {
-        // Arrondi à trois chiffres après la virgule... Ne fonctionne pas !!!
-        // result = std::floor((start + i * step) * 1000) / 1000; 
         fill.push_back(start + i * step);
     }
     return fill;
