@@ -25,7 +25,6 @@ public:
     int vec_cnt;
 
     Conductor(std::vector<float> _noisy_vec, int _N, int _ix_x, int _ix_y);
-//  std::copy(this_>noisy_vec.begin(), this->noisy_vec.end(), _noisy_vec)
     void _generate(float *_noisy_vec, 
              float *_delta_x, float *_delta_y, 
              int *_ix_x     , int *_ix_y, 
